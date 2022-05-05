@@ -10,110 +10,107 @@ const svgo = require("gulp-svgo");
 const svgSprite = require("gulp-svg-sprite");
 
 function scripts() {
-  return src(["node_modules/jquery/dist/jquery.js",
-    "node_modules/mixitup/dist/mixitup.js",
-    "node_modules/rateyo/src/jquery.rateyo.js",
-    "node_modules/swiper/swiper-bundle.js",
-    "app/js/main.js"])
-    .pipe(concat("main.min.js"))
-    .pipe(uglify())
-    .pipe(dest("app/js"))
-    .pipe(browserSync.stream());
+    return src(["node_modules/jquery/dist/jquery.js",
+            "app/js/main.js"
+        ])
+        .pipe(concat("main.min.js"))
+        .pipe(uglify())
+        .pipe(dest("app/js"))
+        .pipe(browserSync.stream());
 }
 
 
 function svg() {
-  return src("app/images/icons/**/*.svg")
-    .pipe(svgo({
-      plugins: [
-        {
-          removeAttrs: { attrs: '(fill|srtoke|data.*)' }
-        }
-      ]
-    }))
-    .pipe(
-      svgSprite({
-        mode: {
-          stack: {
-            sprite: "../sprite.svg",
-          }
-        }
-      }))
-    .pipe(dest("app/images"));
+    return src("app/images/icons/**/*.svg")
+        .pipe(svgo({
+            plugins: [{
+                removeAttrs: { attrs: '(fill|srtoke|data.*)' }
+            }]
+        }))
+        .pipe(
+            svgSprite({
+                mode: {
+                    stack: {
+                        sprite: "../sprite.svg",
+                    }
+                }
+            }))
+        .pipe(dest("app/images"));
 }
 
 
 const tinypng = () => {
-  return src(
-    "app/images/**.jpg",
-    "app/images/**.png",
-    "app/images/**.jpeg"
-  )
-    .pipe(
-      tiny({
-        key: "QCBQTn16gkKtqRmft1SGpNcjw9pjp2q2",
-        log: true,
-      })
-    )
-    .pipe(dest("app/images"));
+    return src(
+            "app/images/**.jpg",
+            "app/images/**.png",
+            "app/images/**.jpeg"
+        )
+        .pipe(
+            tiny({
+                key: "QCBQTn16gkKtqRmft1SGpNcjw9pjp2q2",
+                log: true,
+            })
+        )
+        .pipe(dest("app/images"));
 };
 
 function browsersync() {
-  browserSync.init({
-    server: {
-      baseDir: "app/",
-    },
-    notify: false,
-  });
+    browserSync.init({
+        server: {
+            baseDir: "app/",
+        },
+        notify: false,
+    });
 }
 
 
 
 const imgToApp = () => {
-  return src([
-    "app/images/**/*.png",
-    "app/images/**/*.jpg",
-    "app/images/**/*.jpeg",
-  ]).pipe(dest("app/images"));
+    return src([
+        "app/images/**/*.png",
+        "app/images/**/*.jpg",
+        "app/images/**/*.jpeg",
+    ]).pipe(dest("app/images"));
 };
 
 function styles() {
-  return src("app/scss/style.scss")
-    .pipe(scss({
-      outputStyle: "compressed"
-    }))
-    .pipe(concat("style.css"))
-    .pipe(
-      autoprefixer({
-        overrideBrowserslist: ["last 10 versions"],
-        grid: true
-      })
-    )
-    .pipe(dest("app/css"))
-    .pipe(browserSync.stream());
+    return src("app/scss/style.scss")
+        .pipe(scss({
+            outputStyle: "compressed"
+        }))
+        .pipe(concat("style.css"))
+        .pipe(
+            autoprefixer({
+                overrideBrowserslist: ["last 10 versions"],
+                grid: true
+            })
+        )
+        .pipe(dest("app/css"))
+        .pipe(browserSync.stream());
 }
 
 
 
 function build() {
-  return src(["app/**/*.html",
-    "app/css/style.min.css",
-    "app/fonts/**/*",
-    "app/images/**/*",
-    "app/js/main.min.js"], {
-    base: "app",
-  }).pipe(dest("dist"));
+    return src(["app/**/*.html",
+        "app/css/style.min.css",
+        "app/fonts/**/*",
+        "app/images/**/*",
+        "app/js/main.min.js"
+    ], {
+        base: "app",
+    }).pipe(dest("dist"));
 }
 
 function cleanDist() {
-  return del('dist');
+    return del('dist');
 }
 
 function watching() {
-  watch(["app/images/icons/**/*.svg"], svg);
-  watch(["app/scss/**/*.scss"], styles);
-  watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
-  watch(["app/**/*.html"]).on("change", browserSync.reload);
+    watch(["app/images/icons/**/*.svg"], svg);
+    watch(["app/scss/**/*.scss"], styles);
+    watch(["app/js/**/*.js", "!app/js/main.min.js"], scripts);
+    watch(["app/**/*.html"]).on("change", browserSync.reload);
 }
 
 

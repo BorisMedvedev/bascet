@@ -16,13 +16,13 @@ html {
 body {
     display: flex;
     flex-direction: column;
-    font-family: "Catamaran", sans-serif;
-    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
     font-size: 18px;
     font-style: normal;
     line-height: 1.4;
-    background-image: $bg;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
 }
 
 main {
