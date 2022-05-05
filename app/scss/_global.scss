@@ -1,0 +1,64 @@
+html,
+body {
+    height: 100vh;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: "Catamaran", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    font-style: normal;
+    line-height: 1.4;
+    background-image: $bg;
+    color: #fff;
+}
+
+main {
+    flex-grow: 1;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.container {
+    margin: 0 auto;
+    padding: 0 15px;
+    max-width: 1150px;
+}
+
+.list-reset {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.site {
+    overflow: hidden;
+}
+
+.btn-reset {
+    padding: 0;
+    background-color: transparent;
+    border: transparent;
+    color: inherit;
+    cursor: pointer;
+}
